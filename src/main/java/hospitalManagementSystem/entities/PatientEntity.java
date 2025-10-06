@@ -1,17 +1,22 @@
 package hospitalManagementSystem.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "patients")
 @AllArgsConstructor
+@Builder
 @NoArgsConstructor
 @Data
+@ToString
 public class PatientEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -20,4 +25,19 @@ public class PatientEntity {
     private String name;
     private LocalDate birthDate;
     private String reason;
+    @CreationTimestamp
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    // Relational Fields
+    @OneToOne(mappedBy = "patient")
+    @ToString.Exclude
+    private InsuranceEntity insurance; // Owning Side on relation to insurance
+
+    @OneToMany(mappedBy = "patient")
+    private List<AppointmentEntity> appointments = new ArrayList<>();
 }
