@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "insurances")
 public class InsuranceEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
