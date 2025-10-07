@@ -34,10 +34,11 @@ public class PatientEntity {
     private LocalDateTime updatedAt;
 
     // Relational Fields
-    @OneToOne(mappedBy = "patient")
+    @OneToOne(mappedBy = "patient", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @ToString.Exclude
     private InsuranceEntity insurance; // Owning Side on relation to insurance
 
-    @OneToMany(mappedBy = "patient")
+    @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @ToString.Exclude
     private List<AppointmentEntity> appointments = new ArrayList<>();
 }

@@ -2,6 +2,7 @@ package hospitalManagementSystem.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Builder
 @Table(name = "doctors")
 public class DoctorEntity {
     @Id
@@ -30,9 +32,9 @@ public class DoctorEntity {
     private String specialization;
 
     // Relational Fields
-    @OneToMany(mappedBy = "doctor")
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<AppointmentEntity> appointments = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "doctors")
+    @ManyToMany(mappedBy = "doctors", fetch = FetchType.LAZY)
     private Set<DepartmentEntity> departments = new HashSet<>();
 }
