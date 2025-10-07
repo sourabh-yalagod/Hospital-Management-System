@@ -26,9 +26,17 @@ public class AppointmentService {
         appointment.setDoctor(doctor);
 
         // to maintain by-directional consistency
-//        patient.getAppointments().add(appointment);
-//        doctor.getAppointments().add(appointment);
+        patient.getAppointments().add(appointment);
+        doctor.getAppointments().add(appointment);
 
         return appointmentRepository.save(appointment);
+    }
+
+    public AppointmentEntity reAssignAppointmentToDoctor(String assingmentId, String doctorId) {
+        AppointmentEntity appointment = appointmentRepository.findById(assingmentId).orElseThrow();
+        DoctorEntity doctor = doctorRepository.findById(doctorId).orElseThrow();
+        doctor.getAppointments().add(appointment);
+        appointment.setDoctor(doctor);
+        return appointment;
     }
 }

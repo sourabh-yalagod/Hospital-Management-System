@@ -37,6 +37,8 @@ class HospitalManagementSystemApplicationTests {
     @Autowired
     private AppointmentService appointmentService;
 
+
+    @Test
     @Transactional
     @Rollback(false)
     public void insuranceServiceTest() {
@@ -79,11 +81,18 @@ class HospitalManagementSystemApplicationTests {
 
         var app = appointmentService.createAppointment(
                 appointment,
-                "600dee86-61ba-4472-b656-243efd296c45",
+                "b7833a19-995f-4ba8-8bb0-bd9b98d4cdb3",
                 doctor.getId()
         );
 
         appointmentRepository.save(app);
         System.out.println(app);
+    }
+
+    @Test
+    public void reAssignAppointment(){
+        var appintment= appointmentService.reAssignAppointmentToDoctor("e71f7aad-a993-469a-a2d4-a993c807755c","aea402f3-179e-4b56-a1ec-d4e9684d2e46");
+        appointmentRepository.save(appintment);
+        System.out.println(appintment);
     }
 }

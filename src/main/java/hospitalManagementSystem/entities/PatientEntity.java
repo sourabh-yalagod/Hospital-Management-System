@@ -38,7 +38,7 @@ public class PatientEntity {
     @ToString.Exclude
     private InsuranceEntity insurance; // Owning Side on relation to insurance
 
-    @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "patient", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
     @ToString.Exclude
     private List<AppointmentEntity> appointments = new ArrayList<>();
 }
